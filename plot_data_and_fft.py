@@ -38,17 +38,30 @@ def main():
    
     #x = d[ 0, :] - 100
     x = np.arange(len(y1)) / BoardShim.get_sampling_rate(1) # make array from 0 to end of y1 and divide by sampling rate
-    
+    fig, axs = plt.subplots(2)
+
 
     #plt.plot( x[1:190], y[1:190] )
-    plt.plot( x, y1 )
-    plt.plot( x, y2 )
-    plt.plot( x, y3 )
-    plt.plot( x, y4 )
+    axs[0].plot( x, y1 )
+    axs[0].plot( x, y2 )
+    axs[0].plot( x, y3 )
+    axs[0].plot( x, y4 )
 
-    plt.xlabel("Time (s)")
-    plt.ylabel("microVolts (uV)")
+    axs[0].set(xlabel="Time (s)")
+    axs[0].set(ylabel="microVolts (uV)")
+
+    y1_fft = np.absolute(np.fft.fft(y1)) # Does FFT of y1 and take magnitude of each complex number
+    y2_fft = np.absolute(np.fft.fft(y2))
+    y3_fft = np.absolute(np.fft.fft(y3))
+    y4_fft = np.absolute(np.fft.fft(y4))
+    x_fft = np.fft.fftfreq(len(y1_fft), 1.0/BoardShim.get_sampling_rate(1)) # Calculates x axis scale from sampling rate
     
+    axs[1].plot(x_fft, y1_fft)
+    axs[1].plot(x_fft, y2_fft)
+    axs[1].plot(x_fft, y3_fft)
+    axs[1].plot(x_fft, y4_fft)
+    axs[1].set(xlabel="Frequency (Hz)")
+    axs[1].set(ylabel="Magnitude")           
     plt.show()
 
     
