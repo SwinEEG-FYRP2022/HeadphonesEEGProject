@@ -45,7 +45,10 @@ def main():
     plt.plot( x, y2 )
     plt.plot( x, y3 )
     plt.plot( x, y4 )
-   
+
+    plt.xlabel("Time (s)")
+    plt.ylabel("microVolts (uV)")
+    
     plt.show()
 
     
